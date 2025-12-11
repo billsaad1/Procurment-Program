@@ -1,0 +1,27 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:ProcurementManager.UI.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+        x:Class="ProcurementManager.UI.Views.EditSupplierView"
+        Title="Edit Supplier">
+    <Design.DataContext>
+        <vm:EditSupplierViewModel/>
+    </Design.DataContext>
+    <StackPanel Margin="20">
+        <TextBlock Text="Edit Supplier" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+        <TextBox Watermark="Name" Margin="0,5" Text="{Binding Name}"/>
+        <TextBox Watermark="Contact Person" Margin="0,5" Text="{Binding ContactPerson}"/>
+        <TextBox Watermark="Email" Margin="0,5" Text="{Binding Email}"/>
+        <TextBox Watermark="Phone" Margin="0,5" Text="{Binding Phone}"/>
+        <TextBox Watermark="Address" Margin="0,5" TextWrapping="Wrap" Height="80" Text="{Binding Address}"/>
+        <TextBox Watermark="Payment Terms" Margin="0,5" Text="{Binding PaymentTerms}"/>
+        <TextBox Watermark="Category" Margin="0,5" Text="{Binding Category}"/>
+        <ComboBox Margin="0,5" ItemsSource="{Binding Statuses}" SelectedItem="{Binding Status}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Save" Margin="5" Command="{Binding SaveCommand}"/>
+            <Button Content="Cancel" Margin="5" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

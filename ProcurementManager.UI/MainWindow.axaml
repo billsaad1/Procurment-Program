@@ -1,0 +1,31 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:ProcurementManager.UI.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="ProcurementManager.UI.MainWindow"
+        Title="Procurement Manager">
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <SplitView IsPaneOpen="True" DisplayMode="Inline">
+        <SplitView.Pane>
+            <StackPanel Width="200">
+                <Button Content="Dashboard" Margin="5"/>
+                <Button Content="Suppliers" Margin="5" Command="{Binding ShowSuppliersCommand}"/>
+                <Button Content="Products" Margin="5" Command="{Binding ShowProductsCommand}"/>
+                <Button Content="Purchase Requisitions" Margin="5"/>
+                <Button Content="Purchase Orders" Margin="5"/>
+                <Button Content="Goods Receipt" Margin="5"/>
+                <Button Content="Invoices" Margin="5"/>
+                <Button Content="Reports" Margin="5"/>
+                <Button Content="Users" Margin="5"/>
+                <Button Content="Settings" Margin="5"/>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <ContentControl Content="{Binding CurrentView}"/>
+        </SplitView.Content>
+    </SplitView>
+</Window>

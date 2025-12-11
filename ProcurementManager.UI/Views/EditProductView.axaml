@@ -1,0 +1,25 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:ProcurementManager.UI.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="500"
+        x:Class="ProcurementManager.UI.Views.EditProductView"
+        Title="Edit Product">
+    <Design.DataContext>
+        <vm:EditProductViewModel/>
+    </Design.DataContext>
+    <StackPanel Margin="20">
+        <TextBlock Text="Edit Product" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+        <TextBox Watermark="Name" Margin="0,5" Text="{Binding Name}"/>
+        <TextBox Watermark="SKU" Margin="0,5" Text="{Binding SKU}"/>
+        <TextBox Watermark="Unit" Margin="0,5" Text="{Binding Unit}"/>
+        <TextBox Watermark="Default Price" Margin="0,5" Text="{Binding DefaultPrice}"/>
+        <TextBox Watermark="Category" Margin="0,5" Text="{Binding Category}"/>
+        <TextBox Watermark="Description" Margin="0,5" TextWrapping="Wrap" Height="80" Text="{Binding Description}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Save" Margin="5" Command="{Binding SaveCommand}"/>
+            <Button Content="Cancel" Margin="5" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

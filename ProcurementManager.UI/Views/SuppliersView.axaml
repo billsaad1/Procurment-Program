@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ProcurementManager.UI.Views.SuppliersView">
+    <Design.DataContext>
+        <vm:SuppliersViewModel/>
+    </Design.DataContext>
+    <StackPanel>
+        <TextBlock Text="Supplier Management" FontSize="24" FontWeight="Bold" Margin="10"/>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBox Watermark="Search by name..." Width="300" Text="{Binding SearchText, Mode=TwoWay}"/>
+            <Button Content="Add New Supplier" Margin="10,0,0,0" Command="{Binding AddNewSupplierCommand}"/>
+        </StackPanel>
+        <DataGrid Margin="10" ItemsSource="{Binding Suppliers}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Contact Person" Binding="{Binding ContactPerson}" Width="*"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                <DataGridTemplateColumn Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Edit" Margin="5" Command="{Binding $parent[UserControl].DataContext.EditSupplierCommand}" CommandParameter="{Binding}"/>
+                                <Button Content="Delete" Margin="5" Command="{Binding $parent[UserControl].DataContext.DeleteSupplierCommand}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>
