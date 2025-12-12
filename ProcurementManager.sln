@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementManager.Core", "ProcurementManager.Core\ProcurementManager.Core.csproj", "{57B2BBBD-E93F-45D2-BA2D-BBBB9429B1AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementManager.DataAccess", "ProcurementManager.DataAccess\ProcurementManager.DataAccess.csproj", "{FD8B46AB-FFC2-4894-B2E2-89F30AA2A85B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementManager.DataAccess", "ProcurementManager.DataAccess\ProcurementManager.DataAccess.csproj", "{2BFA352D-5C85-45A5-A8FB-526AAF4ABC3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementManager.UI", "ProcurementManager.UI\ProcurementManager.UI.csproj", "{3E190C48-E88E-4E03-8BDA-9BAF52FB7583}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcurementManager.UI", "ProcurementManager.UI\ProcurementManager.UI.csproj", "{6041A4B7-8800-4511-9592-3565665D30B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,13 +22,13 @@ Global
 		{57B2BBBD-E93F-45D2-BA2D-BBBB9429B1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57B2BBBD-E93F-45D2-BA2D-BBBB9429B1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57B2BBBD-E93F-45D2-BA2D-BBBB9429B1AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD8B46AB-FFC2-4894-B2E2-89F30AA2A85B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD8B46AB-FFC2-4894-B2E2-89F30AA2A85B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD8B46AB-FFC2-4894-B2E2-89F30AA2A85B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD8B46AB-FFC2-4894-B2E2-89F30AA2A85B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E190C48-E88E-4E03-8BDA-9BAF52FB7583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E190C48-E88E-4E03-8BDA-9BAF52FB7583}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E190C48-E88E-4E03-8BDA-9BAF52FB7583}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E190C48-E88E-4E03-8BDA-9BAF52FB7583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BFA352D-5C85-45A5-A8FB-526AAF4ABC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BFA352D-5C85-45A5-A8FB-526AAF4ABC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BFA352D-5C85-45A5-A8FB-526AAF4ABC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BFA352D-5C85-45A5-A8FB-526AAF4ABC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6041A4B7-8800-4511-9592-3565665D30B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6041A4B7-8800-4511-9592-3565665D30B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6041A4B7-8800-4511-9592-3565665D30B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6041A4B7-8800-4511-9592-3565665D30B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
