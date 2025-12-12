@@ -18,8 +18,4 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ProcurementManager.DataAccess\ProcurementManager.DataAccess.csproj" />
-  </ItemGroup>
 </Project>
