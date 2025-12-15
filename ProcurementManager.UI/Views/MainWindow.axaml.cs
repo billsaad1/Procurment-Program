@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace ProcurementManager.UI;
+namespace ProcurementManager.UI.Views;
 
 public partial class MainWindow : Window
 {

@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:ProcurementManager.UI.ViewModels"
+        x:DataType="vm:MainWindowViewModel"
+        mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="768"
+        x:Class="ProcurementManager.UI.Views.MainWindow"
+        Title="Procurement Manager"
+        WindowStartupLocation="CenterScreen">
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Window.Styles>
+        <Style Selector="Button.navButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style Selector="Button.navButton:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#34495E"/>
+        </Style>
+    </Window.Styles>
+
+    <SplitView IsPaneOpen="True" DisplayMode="Inline" PaneBackground="{StaticResource PrimaryDarkBlue}">
+        <SplitView.Pane>
+            <StackPanel Width="220">
+                <!-- Placeholder for Logo -->
+                <TextBlock Text="PROCUREMENT" FontSize="24" FontWeight="Bold" Foreground="White" Margin="20"/>
+
+                <Button Content="Dashboard" Classes="navButton" Command="{Binding ShowDashboardCommand}"/>
+                <Button Content="Suppliers" Classes="navButton" Command="{Binding ShowSuppliersCommand}"/>
+                <Button Content="Products" Classes="navButton" Command="{Binding ShowProductsCommand}"/>
+                <Button Content="Purchase Requisitions" Classes="navButton"/>
+                <Button Content="Purchase Orders" Classes="navButton"/>
+                <Button Content="Goods Receipt" Classes="navButton"/>
+                <Button Content="Invoices" Classes="navButton"/>
+                <Button Content="Reports" Classes="navButton"/>
+                <Button Content="Users" Classes="navButton"/>
+                <Button Content="Settings" Classes="navButton"/>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <Grid RowDefinitions="Auto,*" Background="{StaticResource LightGray}">
+                <Border Grid.Row="0" Background="White" BoxShadow="0 2 5 #CCCCCC" Padding="15">
+                    <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource PrimaryDarkBlue}"/>
+                </Border>
+
+                <ContentControl Grid.Row="1" Content="{Binding CurrentView}" Margin="15"/>
+            </Grid>
+        </SplitView.Content>
+    </SplitView>
+</Window>

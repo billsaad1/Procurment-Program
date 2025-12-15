@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using ProcurementManager.UI.ViewModels;
+using ProcurementManager.UI.Views;
 
 namespace ProcurementManager.UI;
 
@@ -15,7 +17,24 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            var loginViewModel = new LoginViewModel();
+            var loginView = new LoginView
+            {
+                DataContext = loginViewModel
+            };
+
+            loginViewModel.LoginSuccessful += (sender, e) =>
+            {
+                var mainWindow = new MainWindow
+                {
+                    DataContext = new MainWindowViewModel(),
+                };
+                mainWindow.Show();
+                desktop.MainWindow = mainWindow;
+                loginView.Close();
+            };
+
+            desktop.MainWindow = loginView;
         }
 
         base.OnFrameworkInitializationCompleted();
