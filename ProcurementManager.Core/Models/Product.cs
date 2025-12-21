@@ -11,6 +11,10 @@ namespace ProcurementManager.Core.Models
         public decimal DefaultPrice { get; set; }
         public string? SKU { get; set; }
         public string? Category { get; set; }
+
+        public int SupplierID { get; set; }
+        public Supplier? Supplier { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

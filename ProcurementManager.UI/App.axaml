@@ -1,6 +1,21 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             xmlns:views="using:ProcurementManager.UI.Views"
              x:Class="ProcurementManager.UI.App">
+
+    <Application.DataTemplates>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SuppliersViewModel}">
+            <views:SuppliersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProductsViewModel}">
+            <views:ProductsView/>
+        </DataTemplate>
+    </Application.DataTemplates>
+
     <Application.Resources>
         <!-- Custom Color Palette -->
         <SolidColorBrush x:Key="PrimaryDarkBlue" Color="#2C3E50"/>

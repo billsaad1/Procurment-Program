@@ -1,19 +1,24 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ProcurementManager.DataAccess;
 
 namespace ProcurementManager.UI.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
+        private readonly ProcurementManagerDbContext _dbContext;
         private string _username = string.Empty;
         private string _password = string.Empty;
         private string _errorMessage = string.Empty;
 
-        public LoginViewModel()
+        public LoginViewModel(ProcurementManagerDbContext dbContext)
         {
+            _dbContext = dbContext;
             Title = "Login";
-            LoginCommand = new RelayCommand(Login);
+            LoginCommand = new AsyncRelayCommand(Login);
         }
 
         public string Username
@@ -31,17 +36,28 @@ namespace ProcurementManager.UI.ViewModels
         public string ErrorMessage
         {
             get => _errorMessage;
-            set => SetProperty(ref _errorMessage, value);
+            set
+            {
+                if (SetProperty(ref _errorMessage, value))
+                {
+                    OnPropertyChanged(nameof(IsErrorMessageVisible));
+                }
+            }
         }
 
-        public IRelayCommand LoginCommand { get; }
+        public bool IsErrorMessageVisible => !string.IsNullOrEmpty(ErrorMessage);
+
+        public IAsyncRelayCommand LoginCommand { get; }
 
         public event EventHandler? LoginSuccessful;
 
-        private void Login()
+        private async Task Login()
         {
-            // IMPORTANT: This is a placeholder for actual authentication logic.
-            if (Username == "admin" && Password == "admin")
+            // TODO: THIS IS A TEMPORARY AND INSECURE LOGIN IMPLEMENTATION.
+            // Replace this with a proper password hashing and verification library.
+            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == Username);
+
+            if (user != null && user.PasswordHash == Password)
             {
                 ErrorMessage = string.Empty;
                 LoginSuccessful?.Invoke(this, EventArgs.Empty);

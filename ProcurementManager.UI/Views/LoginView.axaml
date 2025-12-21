@@ -35,19 +35,19 @@
                    Margin="0,0,0,10"/>
 
         <TextBlock Text="Username"/>
-        <TextBox Text="{Binding Username}" Watermark="Enter your username"/>
+        <TextBox Name="UsernameTextBox" Text="{Binding Username}" Watermark="Enter your username"/>
 
         <TextBlock Text="Password"/>
-        <TextBox Text="{Binding Password}"
+        <TextBox Name="PasswordTextBox" Text="{Binding Password}"
                  PasswordChar="*"
                  Watermark="Enter your password"/>
 
         <TextBlock Text="{Binding ErrorMessage}"
                    Foreground="{StaticResource DangerRed}"
-                   IsVisible="{Binding !!ErrorMessage}"
+                   IsVisible="{Binding IsErrorMessageVisible}"
                    Margin="0,5"/>
 
-        <Button Content="Login"
+        <Button Name="LoginButton" Content="Login"
                 Command="{Binding LoginCommand}"
                 Margin="0,10,0,0"/>
       </StackPanel>

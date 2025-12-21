@@ -6,11 +6,21 @@ namespace ProcurementManager.UI.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         private ViewModelBase _currentView;
+        private readonly DashboardViewModel _dashboardViewModel;
+        private readonly SuppliersViewModel _suppliersViewModel;
+        private readonly ProductsViewModel _productsViewModel;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(
+            DashboardViewModel dashboardViewModel,
+            SuppliersViewModel suppliersViewModel,
+            ProductsViewModel productsViewModel)
         {
+            _dashboardViewModel = dashboardViewModel;
+            _suppliersViewModel = suppliersViewModel;
+            _productsViewModel = productsViewModel;
+
             // Set default view to Dashboard
-            _currentView = new DashboardViewModel();
+            _currentView = _dashboardViewModel;
             Title = _currentView.Title;
         }
 
@@ -27,19 +37,19 @@ namespace ProcurementManager.UI.ViewModels
         [RelayCommand]
         private void ShowDashboard()
         {
-            CurrentView = new DashboardViewModel();
+            CurrentView = _dashboardViewModel;
         }
 
         [RelayCommand]
         private void ShowSuppliers()
         {
-            CurrentView = new SuppliersViewModel();
+            CurrentView = _suppliersViewModel;
         }
 
         [RelayCommand]
         private void ShowProducts()
         {
-            CurrentView = new ProductsViewModel();
+            CurrentView = _productsViewModel;
         }
     }
 }

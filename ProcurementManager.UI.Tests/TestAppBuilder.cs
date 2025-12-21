@@ -12,5 +12,6 @@ public class TestAppBuilder
         .UseHeadless(new AvaloniaHeadlessPlatformOptions
         {
             UseHeadlessDrawing = false
-        });
+        })
+        .AfterSetup(_ => App.IsTestEnvironment = true);
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -11,26 +11,6 @@ namespace ProcurementManager.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ProductID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Unit = table.Column<string>(type: "TEXT", nullable: false),
-                    DefaultPrice = table.Column<decimal>(type: "TEXT", nullable: false),
-                    SKU = table.Column<string>(type: "TEXT", nullable: true),
-                    Category = table.Column<string>(type: "TEXT", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ProductID);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Suppliers",
                 columns: table => new
@@ -72,6 +52,38 @@ namespace ProcurementManager.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    ProductID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Unit = table.Column<string>(type: "TEXT", nullable: false),
+                    DefaultPrice = table.Column<decimal>(type: "TEXT", nullable: false),
+                    SKU = table.Column<string>(type: "TEXT", nullable: true),
+                    Category = table.Column<string>(type: "TEXT", nullable: true),
+                    SupplierID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.ProductID);
+                    table.ForeignKey(
+                        name: "FK_Products_Suppliers_SupplierID",
+                        column: x => x.SupplierID,
+                        principalTable: "Suppliers",
+                        principalColumn: "SupplierID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_SupplierID",
+                table: "Products",
+                column: "SupplierID");
         }
 
         /// <inheritdoc />
@@ -81,10 +93,10 @@ namespace ProcurementManager.DataAccess.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Suppliers");
         }
     }
 }
