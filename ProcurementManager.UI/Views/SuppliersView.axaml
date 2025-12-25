@@ -4,23 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:ProcurementManager.UI.ViewModels"
              x:DataType="vm:SuppliersViewModel"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ProcurementManager.UI.Views.SuppliersView">
-  <Grid RowDefinitions="Auto,*" RowSpacing="10">
-    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10">
-      <Button Content="Add Supplier" Command="{Binding AddSupplierCommand}"/>
-      <Button Content="Edit Supplier" Command="{Binding EditSupplierCommand}"/>
-      <Button Content="Delete Supplier" Command="{Binding DeleteSupplierCommand}"/>
-    </StackPanel>
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.SuppliersView"
+             Background="{StaticResource RegionFillColor}">
+  <Border Padding="20" Background="{StaticResource RegionFillColor}">
+    <DockPanel LastChildFill="True">
 
-    <DataGrid Grid.Row="1" ItemsSource="{Binding Suppliers}" AutoGenerateColumns="False"
-              SelectedItem="{Binding SelectedSupplier}">
-      <DataGrid.Columns>
-        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
-        <DataGridTextColumn Header="Contact Person" Binding="{Binding ContactPerson}" Width="*"/>
-        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
-        <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*"/>
-      </DataGrid.Columns>
-    </DataGrid>
-  </Grid>
+      <!-- Top Section: Title, Search, and Buttons -->
+      <Grid DockPanel.Dock="Top" Margin="0,0,0,15" ColumnDefinitions="Auto,*">
+        <TextBlock Grid.Column="0" Text="Supplier Management" VerticalAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextFillColorPrimaryBrush}"/>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+          <Button Content="Add Supplier" Command="{Binding AddSupplierCommand}" MinWidth="120"
+                  Classes="accent"/>
+          <Button Content="Edit Supplier" Command="{Binding EditSupplierCommand}" MinWidth="120"/>
+          <Button Content="Delete Supplier" Command="{Binding DeleteSupplierCommand}" MinWidth="120"
+                  Classes="danger"/>
+        </StackPanel>
+      </Grid>
+
+      <!-- Search and Filter Bar -->
+      <Border DockPanel.Dock="Top" Margin="0,0,0,15"
+              Background="{StaticResource ControlFillColorDefaultBrush}"
+              BorderBrush="{StaticResource ControlBorderBrush}"
+              BorderThickness="1" CornerRadius="4" Padding="10">
+        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+          <TextBlock Text="Filter by:" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          <TextBox Watermark="Search by name..." MinWidth="300"/>
+          <!-- TODO: Add filtering by category and status -->
+        </StackPanel>
+      </Border>
+
+      <!-- Data Grid -->
+      <DataGrid ItemsSource="{Binding Suppliers}"
+                SelectedItem="{Binding SelectedSupplier}"
+                AutoGenerateColumns="False" IsReadOnly="True"
+                GridLinesVisibility="Horizontal" CanUserSortColumns="True">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" SortMemberPath="Name"/>
+          <DataGridTextColumn Header="Contact Person" Binding="{Binding ContactPerson}" Width="*"/>
+          <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+          <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="150"/>
+          <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="150"/>
+          <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+    </DockPanel>
+  </Border>
 </UserControl>

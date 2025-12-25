@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:AddEditSupplierViewModel"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.AddEditSupplierView"
+             Background="{StaticResource RegionFillColor}">
+    <Border Padding="20">
+        <DockPanel LastChildFill="False">
+            <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,20,0,0">
+                <Button Content="Save" Command="{Binding SaveCommand}" IsDefault="True" Classes="accent"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"/>
+            </StackPanel>
+
+            <ScrollViewer>
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Watermark="Supplier Name"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Contact Person:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ContactPerson}" Watermark="Contact Person"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Email:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Email}" Watermark="Email Address"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Phone:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone}" Watermark="Phone Number"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Address:" VerticalAlignment="Top"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address}" Watermark="Address" TextWrapping="Wrap" MinHeight="80"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Payment Terms:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PaymentTerms}" Watermark="e.g., Net 30"/>
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Category:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Category}" Watermark="e.g., Electronics"/>
+
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Status:" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="7" Grid.Column="1" SelectedItem="{Binding Status}" SelectedIndex="0">
+                        <ComboBoxItem>Active</ComboBoxItem>
+                        <ComboBoxItem>Inactive</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
+</UserControl>
