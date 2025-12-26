@@ -117,6 +117,7 @@ public partial class App : Application
 
         // Views (for DI in DialogService)
         services.AddTransient<AddEditSupplierView>();
+        services.AddTransient<AddEditProductView>();
 
         // Services
         services.AddSingleton<IDialogService, DialogService>();

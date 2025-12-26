@@ -16,7 +16,8 @@ namespace ProcurementManager.UI.Services
         private readonly IServiceProvider _serviceProvider;
         private readonly Dictionary<Type, Type> _viewModelViewMap = new()
         {
-            { typeof(AddEditSupplierViewModel), typeof(AddEditSupplierView) }
+            { typeof(AddEditSupplierViewModel), typeof(AddEditSupplierView) },
+            { typeof(AddEditProductViewModel), typeof(AddEditProductView) }
             // Register other ViewModel-View pairs here
         };
 
