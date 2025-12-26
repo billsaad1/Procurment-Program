@@ -4,62 +4,45 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProcurementManager.DataAccess;
+using ProcurementManager.UI.Services;
 
 namespace ProcurementManager.UI.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public partial class LoginViewModel : ViewModelBase
     {
         private readonly ProcurementManagerDbContext _dbContext;
+        private readonly IUserSessionService _userSessionService;
+
+        [ObservableProperty]
         private string _username = string.Empty;
+
+        [ObservableProperty]
         private string _password = string.Empty;
-        private string _errorMessage = string.Empty;
 
-        public LoginViewModel(ProcurementManagerDbContext dbContext)
-        {
-            _dbContext = dbContext;
-            Title = "Login";
-            LoginCommand = new AsyncRelayCommand(Login);
-        }
-
-        public string Username
-        {
-            get => _username;
-            set => SetProperty(ref _username, value);
-        }
-
-        public string Password
-        {
-            get => _password;
-            set => SetProperty(ref _password, value);
-        }
-
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set
-            {
-                if (SetProperty(ref _errorMessage, value))
-                {
-                    OnPropertyChanged(nameof(IsErrorMessageVisible));
-                }
-            }
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsErrorMessageVisible))]
+        private string? _errorMessage;
 
         public bool IsErrorMessageVisible => !string.IsNullOrEmpty(ErrorMessage);
 
-        public IAsyncRelayCommand LoginCommand { get; }
-
         public event EventHandler? LoginSuccessful;
 
+        public LoginViewModel(ProcurementManagerDbContext dbContext, IUserSessionService userSessionService)
+        {
+            _dbContext = dbContext;
+            _userSessionService = userSessionService;
+            Title = "Login";
+        }
+
+        [RelayCommand]
         private async Task Login()
         {
-            // TODO: THIS IS A TEMPORARY AND INSECURE LOGIN IMPLEMENTATION.
-            // Replace this with a proper password hashing and verification library.
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == Username);
 
             if (user != null && user.PasswordHash == Password)
             {
-                ErrorMessage = string.Empty;
+                ErrorMessage = null;
+                _userSessionService.SetCurrentUser(user);
                 LoginSuccessful?.Invoke(this, EventArgs.Empty);
             }
             else

@@ -114,12 +114,15 @@ public partial class App : Application
         services.AddTransient<DashboardViewModel>();
         services.AddTransient<SuppliersViewModel>();
         services.AddTransient<ProductsViewModel>();
+        services.AddTransient<PurchaseRequisitionsViewModel>();
 
         // Views (for DI in DialogService)
         services.AddTransient<AddEditSupplierView>();
         services.AddTransient<AddEditProductView>();
+        services.AddTransient<AddEditPurchaseRequisitionView>();
 
         // Services
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<IUserSessionService, UserSessionService>();
     }
 }

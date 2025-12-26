@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace ProcurementManager.UI.ViewModels
 {
@@ -6,5 +7,9 @@ namespace ProcurementManager.UI.ViewModels
     {
         [ObservableProperty]
         private string _title = string.Empty;
+
+        public IRelayCommand SaveCommand { get; set; } = null!;
+
+        public abstract object GetResult();
     }
 }

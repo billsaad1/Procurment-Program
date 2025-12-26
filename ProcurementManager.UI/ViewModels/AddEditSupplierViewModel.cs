@@ -35,12 +35,10 @@ namespace ProcurementManager.UI.ViewModels
         [ObservableProperty]
         private string _status = "Active";
 
-        public IRelayCommand SaveCommand { get; private set; }
         public IRelayCommand CancelCommand { get; }
 
         private readonly Supplier? _supplier;
 
-        // Constructor for adding a new supplier
         public AddEditSupplierViewModel()
         {
             Title = "Add New Supplier";
@@ -48,13 +46,11 @@ namespace ProcurementManager.UI.ViewModels
             CancelCommand = new RelayCommand(() => { });
         }
 
-        // Constructor for editing an existing supplier
         public AddEditSupplierViewModel(Supplier supplier)
         {
             Title = $"Edit Supplier: {supplier.Name}";
             _supplier = supplier;
 
-            // Load existing data
             Name = supplier.Name;
             ContactPerson = supplier.ContactPerson;
             Email = supplier.Email;
@@ -68,9 +64,7 @@ namespace ProcurementManager.UI.ViewModels
             CancelCommand = new RelayCommand(() => { });
         }
 
-        public void SetSaveCommand(IRelayCommand command) => SaveCommand = command;
-
-        public Supplier GetSupplier()
+        public override object GetResult()
         {
             var supplier = _supplier ?? new Supplier();
             supplier.Name = Name;
@@ -89,16 +83,7 @@ namespace ProcurementManager.UI.ViewModels
             return supplier;
         }
 
-
-        private void Save()
-        {
-            // This method is intentionally left empty.
-            // The dialog host will call GetSupplier() and handle the save.
-        }
-
-        private bool CanSave()
-        {
-            return !string.IsNullOrWhiteSpace(Name);
-        }
+        private void Save() { }
+        private bool CanSave() => !string.IsNullOrWhiteSpace(Name);
     }
 }

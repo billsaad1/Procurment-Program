@@ -17,8 +17,8 @@ namespace ProcurementManager.UI.Services
         private readonly Dictionary<Type, Type> _viewModelViewMap = new()
         {
             { typeof(AddEditSupplierViewModel), typeof(AddEditSupplierView) },
-            { typeof(AddEditProductViewModel), typeof(AddEditProductView) }
-            // Register other ViewModel-View pairs here
+            { typeof(AddEditProductViewModel), typeof(AddEditProductView) },
+            { typeof(AddEditPurchaseRequisitionViewModel), typeof(AddEditPurchaseRequisitionView) }
         };
 
         public DialogService(IServiceProvider serviceProvider)
@@ -37,28 +37,28 @@ namespace ProcurementManager.UI.Services
                 Content = view,
                 Title = viewModel.Title,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Width = 500,
+                Width = 800,
                 Height = 600,
-                CanResize = false
+                CanResize = true
             };
 
             var tcs = new TaskCompletionSource<TResult?>();
 
-            if (viewModel is AddEditSupplierViewModel addEditVm)
+            var originalSaveCommand = viewModel.SaveCommand;
+
+            if (viewModel is ValidationViewModelBase validationViewModel)
             {
-                var originalSave = addEditVm.SaveCommand;
-                addEditVm.SetSaveCommand(new RelayCommand(() =>
+                validationViewModel.SaveCommand = new RelayCommand(() =>
                 {
-                    originalSave.Execute(null);
-                    tcs.SetResult(addEditVm.GetSupplier() as TResult);
+                    originalSaveCommand.Execute(null);
+                    tcs.SetResult(viewModel.GetResult() as TResult);
                     dialogWindow.Close();
-                }, () => originalSave.CanExecute(null)));
+                }, () => originalSaveCommand.CanExecute(null));
             }
 
             var lifetime = (IClassicDesktopStyleApplicationLifetime)Application.Current!.ApplicationLifetime!;
             await dialogWindow.ShowDialog(lifetime.MainWindow!);
 
-            // If the dialog is closed without saving, the task will complete with null.
             if (!tcs.Task.IsCompleted)
             {
                 tcs.SetResult(null);

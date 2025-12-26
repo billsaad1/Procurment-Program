@@ -28,12 +28,10 @@ namespace ProcurementManager.UI.ViewModels
         [ObservableProperty]
         private string? _category;
 
-        public IRelayCommand SaveCommand { get; }
         public IRelayCommand CancelCommand { get; }
 
         private readonly Product? _product;
 
-        // Constructor for adding a new product
         public AddEditProductViewModel()
         {
             Title = "Add New Product";
@@ -41,7 +39,6 @@ namespace ProcurementManager.UI.ViewModels
             CancelCommand = new RelayCommand(() => { });
         }
 
-        // Constructor for editing an existing product
         public AddEditProductViewModel(Product product)
         {
             Title = $"Edit Product: {product.Name}";
@@ -58,7 +55,7 @@ namespace ProcurementManager.UI.ViewModels
             CancelCommand = new RelayCommand(() => { });
         }
 
-        public Product GetProduct()
+        public override object GetResult()
         {
             var product = _product ?? new Product();
             product.Name = Name;
@@ -76,10 +73,6 @@ namespace ProcurementManager.UI.ViewModels
         }
 
         private void Save() { }
-
-        private bool CanSave()
-        {
-            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Unit);
-        }
+        private bool CanSave() => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Unit);
     }
 }

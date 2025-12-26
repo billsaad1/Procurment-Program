@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:PurchaseRequisitionsViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.PurchaseRequisitionsView"
+             Background="{StaticResource RegionFillColor}">
+  <Border Padding="20" Background="{StaticResource RegionFillColor}">
+    <DockPanel LastChildFill="True">
+
+      <!-- Top Section: Title and Buttons -->
+      <Grid DockPanel.Dock="Top" Margin="0,0,0,15" ColumnDefinitions="Auto,*">
+        <TextBlock Grid.Column="0" Text="Purchase Requisitions" VerticalAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextFillColorPrimaryBrush}"/>
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+          <Button Content="Create Requisition" Command="{Binding CreatePurchaseRequisitionCommand}" MinWidth="150"
+                  Classes="accent"/>
+          <Button Content="Edit Requisition" Command="{Binding EditPurchaseRequisitionCommand}" MinWidth="120"/>
+          <Button Content="Delete Requisition" Command="{Binding DeletePurchaseRequisitionCommand}" MinWidth="120"
+                  Classes="danger"/>
+        </StackPanel>
+      </Grid>
+
+      <!-- Search and Filter Bar -->
+      <Border DockPanel.Dock="Top" Margin="0,0,0,15"
+              Background="{StaticResource ControlFillColorDefaultBrush}"
+              BorderBrush="{StaticResource ControlBorderBrush}"
+              BorderThickness="1" CornerRadius="4" Padding="10">
+        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+          <TextBlock Text="Filter by:" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          <TextBox Watermark="Search by PR ID or Department..." MinWidth="300"/>
+          <!-- TODO: Add filtering by status -->
+        </StackPanel>
+      </Border>
+
+      <!-- Data Grid -->
+      <DataGrid ItemsSource="{Binding PurchaseRequisitions}"
+                SelectedItem="{Binding SelectedPurchaseRequisition}"
+                AutoGenerateColumns="False" IsReadOnly="True"
+                GridLinesVisibility="Horizontal" CanUserSortColumns="True">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="PR ID" Binding="{Binding PRID}" Width="80" SortMemberPath="PRID"/>
+          <DataGridTextColumn Header="Request Date" Binding="{Binding RequestDate, StringFormat='yyyy-MM-dd'}" Width="120"/>
+          <DataGridTextColumn Header="Requested By" Binding="{Binding RequestedByUser.FullName}" Width="*"/>
+          <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="*"/>
+          <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
+          <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="2*"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+    </DockPanel>
+  </Border>
+</UserControl>

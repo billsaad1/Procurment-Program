@@ -9,15 +9,18 @@ namespace ProcurementManager.UI.ViewModels
         private readonly DashboardViewModel _dashboardViewModel;
         private readonly SuppliersViewModel _suppliersViewModel;
         private readonly ProductsViewModel _productsViewModel;
+        private readonly PurchaseRequisitionsViewModel _purchaseRequisitionsViewModel;
 
         public MainWindowViewModel(
             DashboardViewModel dashboardViewModel,
             SuppliersViewModel suppliersViewModel,
-            ProductsViewModel productsViewModel)
+            ProductsViewModel productsViewModel,
+            PurchaseRequisitionsViewModel purchaseRequisitionsViewModel)
         {
             _dashboardViewModel = dashboardViewModel;
             _suppliersViewModel = suppliersViewModel;
             _productsViewModel = productsViewModel;
+            _purchaseRequisitionsViewModel = purchaseRequisitionsViewModel;
 
             // Set default view to Dashboard
             _currentView = _dashboardViewModel;
@@ -50,6 +53,12 @@ namespace ProcurementManager.UI.ViewModels
         private void ShowProducts()
         {
             CurrentView = _productsViewModel;
+        }
+
+        [RelayCommand]
+        private void ShowPurchaseRequisitions()
+        {
+            CurrentView = _purchaseRequisitionsViewModel;
         }
     }
 }

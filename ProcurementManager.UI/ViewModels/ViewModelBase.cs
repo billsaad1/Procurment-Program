@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ProcurementManager.UI.ViewModels
 {
-    public class ViewModelBase : ObservableObject, IDialogViewModel
+    public class ViewModelBase : ObservableObject
     {
         private string _title = string.Empty;
         public string Title
