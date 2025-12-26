@@ -10,6 +10,8 @@ namespace ProcurementManager.DataAccess
         public DbSet<User> Users { get; set; }
         public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
         public DbSet<PurchaseRequisitionItem> PurchaseRequisitionItems { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
 
         public ProcurementManagerDbContext(DbContextOptions<ProcurementManagerDbContext> options)
             : base(options)
