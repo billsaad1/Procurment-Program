@@ -36,7 +36,7 @@
                 <Button Content="Products" Classes="navButton" Command="{Binding ShowProductsCommand}"/>
                 <Button Content="Purchase Requisitions" Classes="navButton" Command="{Binding ShowPurchaseRequisitionsCommand}"/>
                 <Button Content="Purchase Orders" Classes="navButton" Command="{Binding ShowPurchaseOrdersCommand}"/>
-                <Button Content="Goods Receipt" Classes="navButton"/>
+                <Button Content="Goods Receipt" Classes="navButton" Command="{Binding ShowGoodsReceiptsCommand}"/>
                 <Button Content="Invoices" Classes="navButton"/>
                 <Button Content="Reports" Classes="navButton"/>
                 <Button Content="Users" Classes="navButton"/>

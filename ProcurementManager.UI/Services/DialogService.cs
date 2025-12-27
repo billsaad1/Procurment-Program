@@ -19,7 +19,8 @@ namespace ProcurementManager.UI.Services
             { typeof(AddEditSupplierViewModel), typeof(AddEditSupplierView) },
             { typeof(AddEditProductViewModel), typeof(AddEditProductView) },
             { typeof(AddEditPurchaseRequisitionViewModel), typeof(AddEditPurchaseRequisitionView) },
-            { typeof(AddEditPurchaseOrderViewModel), typeof(AddEditPurchaseOrderView) }
+            { typeof(AddEditPurchaseOrderViewModel), typeof(AddEditPurchaseOrderView) },
+            { typeof(ReceiveGoodsViewModel), typeof(ReceiveGoodsView) }
         };
 
         public DialogService(IServiceProvider serviceProvider)

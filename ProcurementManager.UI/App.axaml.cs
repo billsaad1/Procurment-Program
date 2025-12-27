@@ -116,12 +116,14 @@ public partial class App : Application
         services.AddTransient<ProductsViewModel>();
         services.AddTransient<PurchaseRequisitionsViewModel>();
         services.AddTransient<PurchaseOrdersViewModel>();
+        services.AddTransient<GoodsReceiptsViewModel>();
 
         // Views (for DI in DialogService)
         services.AddTransient<AddEditSupplierView>();
         services.AddTransient<AddEditProductView>();
         services.AddTransient<AddEditPurchaseRequisitionView>();
         services.AddTransient<AddEditPurchaseOrderView>();
+        services.AddTransient<ReceiveGoodsView>();
 
         // Services
         services.AddSingleton<IDialogService, DialogService>();

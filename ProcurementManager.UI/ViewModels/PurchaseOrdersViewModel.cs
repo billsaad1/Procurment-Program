@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -90,6 +91,50 @@ namespace ProcurementManager.UI.ViewModels
                 _dbContext.PurchaseOrders.Remove(SelectedPurchaseOrder);
                 await _dbContext.SaveChangesAsync();
                 PurchaseOrders.Remove(SelectedPurchaseOrder);
+            }
+        }
+
+        [RelayCommand(CanExecute = nameof(CanEditOrDelete))]
+        private async Task ReceiveGoods()
+        {
+            if (SelectedPurchaseOrder == null) return;
+
+            // Ensure the selected PO has all its items loaded
+            await _dbContext.Entry(SelectedPurchaseOrder)
+                .Collection(po => po.Items)
+                .Query()
+                .Include(item => item.Product)
+                .LoadAsync();
+
+            var viewModel = new ReceiveGoodsViewModel(_userSessionService, SelectedPurchaseOrder);
+            var newReceipt = await _dialogService.ShowDialogAsync<GoodsReceipt>(viewModel);
+
+            if (newReceipt != null && newReceipt.Items.Any())
+            {
+                // Ensure foreign keys are set correctly from the current context.
+                newReceipt.POID = SelectedPurchaseOrder.POID;
+                newReceipt.ReceivedByUserID = _userSessionService.CurrentUser!.UserID;
+
+                _dbContext.GoodsReceipts.Add(newReceipt);
+
+                // Update PO status
+                var totalOrdered = SelectedPurchaseOrder.Items.Sum(i => i.Quantity);
+                var allReceiptsForPo = await _dbContext.GoodsReceiptItems
+                    .Where(gri => gri.PurchaseOrderItem.POID == SelectedPurchaseOrder.POID)
+                    .ToListAsync();
+                var totalReceived = allReceiptsForPo.Sum(i => i.ReceivedQuantity) + newReceipt.Items.Sum(i => i.ReceivedQuantity);
+
+                if (totalReceived >= totalOrdered)
+                {
+                    SelectedPurchaseOrder.Status = "Received in Full";
+                }
+                else
+                {
+                    SelectedPurchaseOrder.Status = "Partially Received";
+                }
+
+                await _dbContext.SaveChangesAsync();
+                await LoadPurchaseOrders();
             }
         }
 

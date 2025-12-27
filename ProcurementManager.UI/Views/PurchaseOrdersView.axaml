@@ -21,6 +21,8 @@
           <Button Content="Edit Order" Command="{Binding EditPurchaseOrderCommand}" MinWidth="120"/>
           <Button Content="Delete Order" Command="{Binding DeletePurchaseOrderCommand}" MinWidth="120"
                   Classes="danger"/>
+          <Button Content="Receive Goods" Command="{Binding ReceiveGoodsCommand}" MinWidth="150"
+                  IsEnabled="{Binding SelectedPurchaseOrder, Converter={x:Static ObjectConverters.IsNotNull}}"/>
         </StackPanel>
       </Grid>
 
