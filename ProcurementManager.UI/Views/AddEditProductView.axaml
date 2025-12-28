@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:AddEditProductViewModel"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="500"
+             x:Class="ProcurementManager.UI.Views.AddEditProductView"
+             Background="{StaticResource RegionFillColor}">
+    <Border Padding="20">
+        <DockPanel LastChildFill="False">
+            <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,20,0,0">
+                <Button Content="Save" Command="{Binding SaveCommand}" IsDefault="True" Classes="accent"/>
+                <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"/>
+            </StackPanel>
+
+            <ScrollViewer>
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Watermark="Product/Service Name"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Description:" VerticalAlignment="Top"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Description}" Watermark="Product/Service Description" TextWrapping="Wrap" MinHeight="80"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Unit:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Unit}" Watermark="e.g., piece, kg, hour"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Default Price:" VerticalAlignment="Center"/>
+                    <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding DefaultPrice}" FormatString="C2"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="SKU:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Sku}" Watermark="Stock Keeping Unit"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Category:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Category}" Watermark="e.g., Office Supplies"/>
+                </Grid>
+            </ScrollViewer>
+        </DockPanel>
+    </Border>
+</UserControl>

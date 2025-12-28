@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:AddEditPurchaseOrderViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.AddEditPurchaseOrderView"
+             Background="{StaticResource RegionFillColor}">
+  <Border Padding="20">
+    <DockPanel LastChildFill="True">
+
+      <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+      <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,15,0,0">
+        <Button Content="Save" Command="{Binding SaveCommand}" IsDefault="True" Classes="accent"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"/>
+      </StackPanel>
+
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto,*" RowDefinitions="Auto,Auto,*" RowSpacing="10">
+
+        <!-- Header Information -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Supplier:" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AvailableSuppliers}" 
+                  SelectedItem="{Binding SelectedSupplier}" DisplayMemberBinding="{Binding Name}" 
+                  PlaceholderText="Select a supplier..." Margin="0,0,10,0"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Delivery Date:" VerticalAlignment="Center"/>
+        <DatePicker Grid.Row="0" Grid.Column="3" SelectedDate="{Binding DeliveryDate}"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Shipping Address:" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding ShippingAddress}" TextWrapping="Wrap" MinHeight="60"/>
+
+        <!-- Items Section -->
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,15,0,0"
+                BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1" CornerRadius="4">
+          <DockPanel LastChildFill="True">
+            <TextBlock DockPanel.Dock="Top" Text="Line Items" FontSize="16" FontWeight="SemiBold" Margin="10"/>
+
+            <!-- TODO: Add functionality to add items, perhaps from a PR -->
+
+            <!-- Items Grid -->
+            <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False" CanUserReorderColumns="False"
+                      GridLinesVisibility="Horizontal">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, StringFormat=C}" IsReadOnly="True" Width="120"/>
+                <DataGridTemplateColumn Header="Quantity" Width="100">
+                  <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                      <NumericUpDown Value="{Binding Quantity}" Minimum="1"/>
+                    </DataTemplate>
+                  </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice, StringFormat=C}" IsReadOnly="True" Width="120"/>
+              </DataGrid.Columns>
+            </DataGrid>
+          </DockPanel>
+        </Border>
+      </Grid>
+    </DockPanel>
+  </Border>
+</UserControl>

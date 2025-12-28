@@ -9,15 +9,27 @@ namespace ProcurementManager.UI.ViewModels
         private readonly DashboardViewModel _dashboardViewModel;
         private readonly SuppliersViewModel _suppliersViewModel;
         private readonly ProductsViewModel _productsViewModel;
+        private readonly PurchaseRequisitionsViewModel _purchaseRequisitionsViewModel;
+        private readonly PurchaseOrdersViewModel _purchaseOrdersViewModel;
+        private readonly GoodsReceiptsViewModel _goodsReceiptsViewModel;
+        private readonly InvoicesViewModel _invoicesViewModel;
 
         public MainWindowViewModel(
             DashboardViewModel dashboardViewModel,
             SuppliersViewModel suppliersViewModel,
-            ProductsViewModel productsViewModel)
+            ProductsViewModel productsViewModel,
+            PurchaseRequisitionsViewModel purchaseRequisitionsViewModel,
+            PurchaseOrdersViewModel purchaseOrdersViewModel,
+            GoodsReceiptsViewModel goodsReceiptsViewModel,
+            InvoicesViewModel invoicesViewModel)
         {
             _dashboardViewModel = dashboardViewModel;
             _suppliersViewModel = suppliersViewModel;
             _productsViewModel = productsViewModel;
+            _purchaseRequisitionsViewModel = purchaseRequisitionsViewModel;
+            _purchaseOrdersViewModel = purchaseOrdersViewModel;
+            _goodsReceiptsViewModel = goodsReceiptsViewModel;
+            _invoicesViewModel = invoicesViewModel;
 
             // Set default view to Dashboard
             _currentView = _dashboardViewModel;
@@ -50,6 +62,30 @@ namespace ProcurementManager.UI.ViewModels
         private void ShowProducts()
         {
             CurrentView = _productsViewModel;
+        }
+
+        [RelayCommand]
+        private void ShowPurchaseRequisitions()
+        {
+            CurrentView = _purchaseRequisitionsViewModel;
+        }
+
+        [RelayCommand]
+        private void ShowPurchaseOrders()
+        {
+            CurrentView = _purchaseOrdersViewModel;
+        }
+
+        [RelayCommand]
+        private void ShowGoodsReceipts()
+        {
+            CurrentView = _goodsReceiptsViewModel;
+        }
+
+        [RelayCommand]
+        private void ShowInvoices()
+        {
+            CurrentView = _invoicesViewModel;
         }
     }
 }

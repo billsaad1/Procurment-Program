@@ -8,6 +8,7 @@ using ProcurementManager.Core.Models;
 using ProcurementManager.DataAccess;
 using ProcurementManager.UI.ViewModels;
 using ProcurementManager.UI.Views;
+using ProcurementManager.UI.Services;
 using System;
 using System.Data.Common;
 using System.Linq;
@@ -36,7 +37,14 @@ public partial class App : Application
         using (var scope = Services.CreateScope())
         {
             var dbContext = scope.ServiceProvider.GetRequiredService<ProcurementManagerDbContext>();
-            dbContext.Database.Migrate();
+            if (IsTestEnvironment)
+            {
+                dbContext.Database.EnsureCreated();
+            }
+            else
+            {
+                dbContext.Database.Migrate();
+            }
             SeedDatabase(dbContext);
         }
 
@@ -106,5 +114,22 @@ public partial class App : Application
         services.AddTransient<DashboardViewModel>();
         services.AddTransient<SuppliersViewModel>();
         services.AddTransient<ProductsViewModel>();
+        services.AddTransient<PurchaseRequisitionsViewModel>();
+        services.AddTransient<PurchaseOrdersViewModel>();
+        services.AddTransient<GoodsReceiptsViewModel>();
+        services.AddTransient<InvoicesViewModel>();
+
+        // Views (for DI in DialogService)
+        services.AddTransient<AddEditSupplierView>();
+        services.AddTransient<AddEditProductView>();
+        services.AddTransient<AddEditPurchaseRequisitionView>();
+        services.AddTransient<AddEditPurchaseOrderView>();
+        services.AddTransient<ReceiveGoodsView>();
+        services.AddTransient<AddEditInvoiceView>();
+        services.AddTransient<RecordPaymentView>();
+
+        // Services
+        services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<IUserSessionService, UserSessionService>();
     }
 }

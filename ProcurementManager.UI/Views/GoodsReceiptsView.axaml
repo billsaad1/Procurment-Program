@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:GoodsReceiptsViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.GoodsReceiptsView"
+             Background="{StaticResource RegionFillColor}">
+  <Border Padding="20" Background="{StaticResource RegionFillColor}">
+    <DockPanel LastChildFill="True">
+
+      <TextBlock DockPanel.Dock="Top" Text="Goods Receipt History" VerticalAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                   Margin="0,0,0,15"/>
+
+      <!-- Search and Filter Bar -->
+      <Border DockPanel.Dock="Top" Margin="0,0,0,15"
+              Background="{StaticResource ControlFillColorDefaultBrush}"
+              BorderBrush="{StaticResource ControlBorderBrush}"
+              BorderThickness="1" CornerRadius="4" Padding="10">
+        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+          <TextBlock Text="Filter by:" FontWeight="SemiBold" VerticalAlignment="Center"/>
+          <TextBox Watermark="Search by PO ID or Supplier..." MinWidth="300"/>
+        </StackPanel>
+      </Border>
+
+      <!-- Data Grid -->
+      <DataGrid ItemsSource="{Binding GoodsReceipts}"
+                AutoGenerateColumns="False" IsReadOnly="True"
+                GridLinesVisibility="Horizontal" CanUserSortColumns="True">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Receipt ID" Binding="{Binding GRNID}" Width="100" SortMemberPath="GRNID"/>
+          <DataGridTextColumn Header="Receipt Date" Binding="{Binding ReceiptDate, StringFormat='yyyy-MM-dd'}" Width="120"/>
+          <DataGridTextColumn Header="PO ID" Binding="{Binding POID}" Width="80"/>
+          <DataGridTextColumn Header="Supplier" Binding="{Binding PurchaseOrder.Supplier.Name}" Width="*"/>
+          <DataGridTextColumn Header="Received By" Binding="{Binding ReceivedByUser.FullName}" Width="*"/>
+          <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="2*"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+    </DockPanel>
+  </Border>
+</UserControl>

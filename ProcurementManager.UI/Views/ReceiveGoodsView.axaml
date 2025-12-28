@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:ReceiveGoodsViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.ReceiveGoodsView"
+             Background="{StaticResource RegionFillColor}">
+  <Border Padding="20">
+    <DockPanel LastChildFill="True">
+
+      <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+      <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,15,0,0">
+        <Button Content="Save Receipt" Command="{Binding SaveCommand}" IsDefault="True" Classes="accent"/>
+        <Button Content="Cancel" IsCancel="True"/>
+      </StackPanel>
+
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*" RowDefinitions="Auto,*" RowSpacing="10">
+
+        <!-- Header Information -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Receipt Date:" VerticalAlignment="Center"/>
+        <DatePicker Grid.Row="0" Grid.Column="1" SelectedDate="{Binding ReceiptDate}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Notes:" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Notes}" TextWrapping="Wrap" MinHeight="60"/>
+        
+      </Grid>
+
+        <!-- Items Grid -->
+      <DataGrid Margin="0,15,0,0" ItemsSource="{Binding Items}" AutoGenerateColumns="False" CanUserReorderColumns="False"
+                GridLinesVisibility="Horizontal">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Product Name" Binding="{Binding PurchaseOrderItem.Product.Name}" IsReadOnly="True" Width="*"/>
+          <DataGridTextColumn Header="Ordered" Binding="{Binding PurchaseOrderItem.Quantity}" IsReadOnly="True" Width="100"/>
+          <DataGridTemplateColumn Header="Received Quantity" Width="150">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <NumericUpDown Value="{Binding ReceivedQuantity}" Minimum="0" Maximum="{Binding PurchaseOrderItem.Quantity}"/>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+          <DataGridTextColumn Header="Unit" Binding="{Binding PurchaseOrderItem.Product.Unit}" IsReadOnly="True" Width="100"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+    </DockPanel>
+  </Border>
+</UserControl>

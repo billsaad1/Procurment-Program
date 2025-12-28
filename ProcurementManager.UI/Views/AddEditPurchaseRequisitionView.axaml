@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             x:DataType="vm:AddEditPurchaseRequisitionViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.AddEditPurchaseRequisitionView"
+             Background="{StaticResource RegionFillColor}">
+  <Border Padding="20">
+    <DockPanel LastChildFill="True">
+
+      <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
+
+      <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,15,0,0">
+        <Button Content="Save" Command="{Binding SaveCommand}" IsDefault="True" Classes="accent"/>
+        <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True"/>
+      </StackPanel>
+
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="Auto,*,Auto,*" RowDefinitions="Auto,Auto,*" RowSpacing="10">
+
+        <!-- Header Information -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Department:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Department}" Margin="0,0,10,0"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Budget Code:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding BudgetCode}"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Notes:" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Notes}" TextWrapping="Wrap" MinHeight="60"/>
+
+        <!-- Items Section -->
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,15,0,0"
+                BorderBrush="{StaticResource ControlBorderBrush}" BorderThickness="1" CornerRadius="4">
+          <DockPanel LastChildFill="True">
+            <TextBlock DockPanel.Dock="Top" Text="Line Items" FontSize="16" FontWeight="SemiBold" Margin="10"/>
+
+            <!-- Add Item Bar -->
+            <Border DockPanel.Dock="Top" Padding="10" Background="{StaticResource ControlFillColorDefaultBrush}">
+              <StackPanel Orientation="Horizontal" Spacing="10">
+                <ComboBox ItemsSource="{Binding AvailableProducts}" SelectedItem="{Binding SelectedProductToAdd}"
+                          DisplayMemberBinding="{Binding Name}" PlaceholderText="Select a product..." MinWidth="300"/>
+                <NumericUpDown Value="{Binding QuantityToAdd}" Minimum="1" MinWidth="100"/>
+                <Button Content="Add Item" Command="{Binding AddItemCommand}"/>
+              </StackPanel>
+            </Border>
+
+            <!-- Items Grid -->
+            <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False" CanUserReorderColumns="False"
+                      GridLinesVisibility="Horizontal">
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, StringFormat=C}" IsReadOnly="True" Width="120"/>
+                <DataGridTemplateColumn Header="Quantity" Width="100">
+                  <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                      <NumericUpDown Value="{Binding Quantity}" Minimum="1"/>
+                    </DataTemplate>
+                  </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice, StringFormat=C}" IsReadOnly="True" Width="120"/>
+                <DataGridTemplateColumn Header="Actions">
+                  <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                      <Button Content="Remove" Command="{Binding $parent[DataGrid].DataContext.RemoveItemCommand}"
+                              CommandParameter="{Binding}" Classes="danger"/>
+                    </DataTemplate>
+                  </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+              </DataGrid.Columns>
+            </DataGrid>
+          </DockPanel>
+        </Border>
+      </Grid>
+    </DockPanel>
+  </Border>
+</UserControl>
