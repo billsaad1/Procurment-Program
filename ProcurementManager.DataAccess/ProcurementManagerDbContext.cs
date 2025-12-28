@@ -14,6 +14,8 @@ namespace ProcurementManager.DataAccess
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public DbSet<GoodsReceipt> GoodsReceipts { get; set; }
         public DbSet<GoodsReceiptItem> GoodsReceiptItems { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public ProcurementManagerDbContext(DbContextOptions<ProcurementManagerDbContext> options)
             : base(options)

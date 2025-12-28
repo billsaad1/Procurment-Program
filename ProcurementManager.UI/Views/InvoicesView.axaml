@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ProcurementManager.UI.Views.InvoicesView"
+             x:DataType="vm:InvoicesViewModel">
+    <Grid RowDefinitions="Auto,*" Margin="10">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+            <Button Content="Create Invoice" Command="{Binding CreateInvoiceCommand}" Classes="AccentButtonStyle"/>
+            <Button Content="Edit Invoice" Command="{Binding EditInvoiceCommand}" />
+            <Button Content="Record Payment" Command="{Binding RecordPaymentCommand}" />
+            <Button Content="Delete Invoice" Command="{Binding DeleteInvoiceCommand}" />
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Invoices}"
+                  SelectedItem="{Binding SelectedInvoice}"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNumber}" Width="*"/>
+                <DataGridTextColumn Header="Invoice Date" Binding="{Binding InvoiceDate, StringFormat='yyyy-MM-dd'}" Width="*"/>
+                <DataGridTextColumn Header="PO ID" Binding="{Binding POID}" Width="100"/>
+                <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier.Name}" Width="*"/>
+                <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmountDue, StringFormat='C'}" Width="*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

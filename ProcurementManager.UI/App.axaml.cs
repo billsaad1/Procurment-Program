@@ -117,6 +117,7 @@ public partial class App : Application
         services.AddTransient<PurchaseRequisitionsViewModel>();
         services.AddTransient<PurchaseOrdersViewModel>();
         services.AddTransient<GoodsReceiptsViewModel>();
+        services.AddTransient<InvoicesViewModel>();
 
         // Views (for DI in DialogService)
         services.AddTransient<AddEditSupplierView>();
@@ -124,6 +125,8 @@ public partial class App : Application
         services.AddTransient<AddEditPurchaseRequisitionView>();
         services.AddTransient<AddEditPurchaseOrderView>();
         services.AddTransient<ReceiveGoodsView>();
+        services.AddTransient<AddEditInvoiceView>();
+        services.AddTransient<RecordPaymentView>();
 
         // Services
         services.AddSingleton<IDialogService, DialogService>();
