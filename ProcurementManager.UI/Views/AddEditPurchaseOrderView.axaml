@@ -37,7 +37,15 @@
           <DockPanel LastChildFill="True">
             <TextBlock DockPanel.Dock="Top" Text="Line Items" FontSize="16" FontWeight="SemiBold" Margin="10"/>
 
-            <!-- TODO: Add functionality to add items, perhaps from a PR -->
+            <!-- Add Item Section -->
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10" Margin="10,0,10,10">
+              <ComboBox ItemsSource="{Binding AvailableProducts}"
+                        SelectedItem="{Binding SelectedProduct}"
+                        DisplayMemberBinding="{Binding Name}"
+                        PlaceholderText="Select a product..." Width="300"/>
+              <NumericUpDown Value="{Binding NewItemQuantity}" Minimum="1" Width="100"/>
+              <Button Content="Add Item" Command="{Binding AddItemCommand}"/>
+            </StackPanel>
 
             <!-- Items Grid -->
             <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False" CanUserReorderColumns="False"
@@ -53,6 +61,15 @@
                   </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Total Price" Binding="{Binding TotalPrice, StringFormat=C}" IsReadOnly="True" Width="120"/>
+                <DataGridTemplateColumn Header="Actions">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Remove"
+                                    Command="{Binding $parent[UserControl].DataContext.RemoveItemCommand}"
+                                    CommandParameter="{Binding}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
               </DataGrid.Columns>
             </DataGrid>
           </DockPanel>

@@ -36,7 +36,20 @@ namespace ProcurementManager.UI.ViewModels
         [ObservableProperty]
         private ObservableCollection<Supplier> _availableSuppliers = new();
 
+        [ObservableProperty]
+        private ObservableCollection<Product> _availableProducts = new();
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddItemCommand))]
+        private Product? _selectedProduct;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddItemCommand))]
+        private int _newItemQuantity = 1;
+
         public IRelayCommand CancelCommand { get; }
+        public IRelayCommand AddItemCommand { get; }
+        public IRelayCommand<PurchaseOrderItem> RemoveItemCommand { get; }
 
         public AddEditPurchaseOrderViewModel(ProcurementManagerDbContext dbContext, IUserSessionService userSessionService)
         {
@@ -45,7 +58,9 @@ namespace ProcurementManager.UI.ViewModels
             Title = "Create Purchase Order";
             SaveCommand = new RelayCommand(Save, CanSave);
             CancelCommand = new RelayCommand(() => { });
-            LoadSuppliersCommand.Execute(null);
+            AddItemCommand = new RelayCommand(AddItem, CanAddItem);
+            RemoveItemCommand = new RelayCommand<PurchaseOrderItem>(RemoveItem);
+            LoadSuppliersAndProductsCommand.Execute(null);
         }
 
         public AddEditPurchaseOrderViewModel(ProcurementManagerDbContext dbContext, IUserSessionService userSessionService, PurchaseOrder po)
@@ -63,14 +78,45 @@ namespace ProcurementManager.UI.ViewModels
 
             SaveCommand = new RelayCommand(Save, CanSave);
             CancelCommand = new RelayCommand(() => { });
-            LoadSuppliersCommand.Execute(null);
+            AddItemCommand = new RelayCommand(AddItem, CanAddItem);
+            RemoveItemCommand = new RelayCommand<PurchaseOrderItem>(RemoveItem);
+            LoadSuppliersAndProductsCommand.Execute(null);
         }
 
         [RelayCommand]
-        private async Task LoadSuppliers()
+        private async Task LoadSuppliersAndProducts()
         {
             var suppliers = await _dbContext.Suppliers.OrderBy(s => s.Name).ToListAsync();
             AvailableSuppliers = new ObservableCollection<Supplier>(suppliers);
+            var products = await _dbContext.Products.OrderBy(p => p.Name).ToListAsync();
+            AvailableProducts = new ObservableCollection<Product>(products);
+        }
+
+        private void AddItem()
+        {
+            if (SelectedProduct == null || NewItemQuantity <= 0) return;
+
+            var newItem = new PurchaseOrderItem
+            {
+                ProductID = SelectedProduct.ProductID,
+                Product = SelectedProduct,
+                Quantity = NewItemQuantity,
+                UnitPrice = SelectedProduct.DefaultPrice,
+                TotalPrice = NewItemQuantity * SelectedProduct.DefaultPrice
+            };
+            Items.Add(newItem);
+            SaveCommand.NotifyCanExecuteChanged();
+        }
+
+        private bool CanAddItem() => SelectedProduct != null && NewItemQuantity > 0;
+
+        private void RemoveItem(PurchaseOrderItem? item)
+        {
+            if (item != null)
+            {
+                Items.Remove(item);
+                SaveCommand.NotifyCanExecuteChanged();
+            }
         }
 
         public override object GetResult()

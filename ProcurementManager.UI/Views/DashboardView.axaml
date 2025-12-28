@@ -2,7 +2,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ProcurementManager.UI.Views.DashboardView">
-  <TextBlock>Dashboard View</TextBlock>
+             xmlns:vm="using:ProcurementManager.UI.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="ProcurementManager.UI.Views.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Border.kpiCard">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="BoxShadow" Value="0 2 5 #CCCCCC"/>
+        </Style>
+        <Style Selector="TextBlock.kpiValue">
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryDarkBlue}"/>
+        </Style>
+        <Style Selector="TextBlock.kpiTitle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="Gray"/>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <StackPanel Spacing="20" Margin="10">
+            <!-- KPI Cards -->
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="20">
+                <Border Grid.Column="0" Classes="kpiCard">
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="{Binding PendingRequisitionsCount}" Classes="kpiValue"/>
+                        <TextBlock Text="Pending Requisitions" Classes="kpiTitle"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Classes="kpiCard">
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="{Binding OpenPurchaseOrdersCount}" Classes="kpiValue"/>
+                        <TextBlock Text="Open Purchase Orders" Classes="kpiTitle"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Classes="kpiCard">
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="{Binding MonthlyPurchaseValue, StringFormat='C'}" Classes="kpiValue"/>
+                        <TextBlock Text="This Month's Purchases" Classes="kpiTitle"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" Classes="kpiCard">
+                    <StackPanel Spacing="5">
+                        <TextBlock Text="{Binding SupplierCount}" Classes="kpiValue"/>
+                        <TextBlock Text="Total Suppliers" Classes="kpiTitle"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Recent Activity -->
+            <TextBlock Text="Recent Purchase Orders" Classes="h2" Margin="0,20,0,0"/>
+            <DataGrid ItemsSource="{Binding RecentPurchaseOrders}"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="PO ID" Binding="{Binding POID}" Width="100"/>
+                    <DataGridTextColumn Header="Order Date" Binding="{Binding OrderDate, StringFormat='yyyy-MM-dd'}" Width="*"/>
+                    <DataGridTextColumn Header="Supplier" Binding="{Binding Supplier.Name}" Width="*"/>
+                    <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount, StringFormat='C'}" Width="*"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -24,7 +24,7 @@ namespace ProcurementManager.Core.Models
         [Required]
         public decimal UnitPrice { get; set; }
 
-        public decimal TotalPrice => Quantity * UnitPrice;
+        public decimal TotalPrice { get; set; }
 
         public string? Notes { get; set; }
     }
