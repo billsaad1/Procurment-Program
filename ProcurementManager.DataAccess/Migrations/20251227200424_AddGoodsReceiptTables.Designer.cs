@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProcurementManager.DataAccess;
 
@@ -10,9 +11,11 @@ using ProcurementManager.DataAccess;
 namespace ProcurementManager.DataAccess.Migrations
 {
     [DbContext(typeof(ProcurementManagerDbContext))]
-    partial class ProcurementManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251227200424_AddGoodsReceiptTables")]
+    partial class AddGoodsReceiptTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
@@ -77,97 +80,6 @@ namespace ProcurementManager.DataAccess.Migrations
                     b.HasIndex("POItemID");
 
                     b.ToTable("GoodsReceiptItems");
-                });
-
-            modelBuilder.Entity("ProcurementManager.Core.Models.Invoice", b =>
-                {
-                    b.Property<int>("InvoiceID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("InvoiceDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("InvoiceNumber")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("POID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("SupplierID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("TaxAmount")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<decimal>("TotalAmountDue")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("InvoiceID");
-
-                    b.HasIndex("POID");
-
-                    b.HasIndex("SupplierID");
-
-                    b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("ProcurementManager.Core.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("AmountPaid")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("InvoiceID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("PaidByUserID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ReferenceNumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PaymentID");
-
-                    b.HasIndex("InvoiceID");
-
-                    b.HasIndex("PaidByUserID");
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("ProcurementManager.Core.Models.Product", b =>
@@ -505,42 +417,6 @@ namespace ProcurementManager.DataAccess.Migrations
                     b.Navigation("PurchaseOrderItem");
                 });
 
-            modelBuilder.Entity("ProcurementManager.Core.Models.Invoice", b =>
-                {
-                    b.HasOne("ProcurementManager.Core.Models.PurchaseOrder", "PurchaseOrder")
-                        .WithMany()
-                        .HasForeignKey("POID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProcurementManager.Core.Models.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PurchaseOrder");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("ProcurementManager.Core.Models.Payment", b =>
-                {
-                    b.HasOne("ProcurementManager.Core.Models.Invoice", "Invoice")
-                        .WithMany("Payments")
-                        .HasForeignKey("InvoiceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProcurementManager.Core.Models.User", "PaidByUser")
-                        .WithMany()
-                        .HasForeignKey("PaidByUserID");
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("PaidByUser");
-                });
-
             modelBuilder.Entity("ProcurementManager.Core.Models.PurchaseOrder", b =>
                 {
                     b.HasOne("ProcurementManager.Core.Models.User", "IssuedByUser")
@@ -624,11 +500,6 @@ namespace ProcurementManager.DataAccess.Migrations
             modelBuilder.Entity("ProcurementManager.Core.Models.GoodsReceipt", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("ProcurementManager.Core.Models.Invoice", b =>
-                {
-                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("ProcurementManager.Core.Models.PurchaseOrder", b =>

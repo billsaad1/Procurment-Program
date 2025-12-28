@@ -8,6 +8,14 @@ namespace ProcurementManager.DataAccess
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
+        public DbSet<PurchaseRequisitionItem> PurchaseRequisitionItems { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        public DbSet<GoodsReceipt> GoodsReceipts { get; set; }
+        public DbSet<GoodsReceiptItem> GoodsReceiptItems { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public ProcurementManagerDbContext(DbContextOptions<ProcurementManagerDbContext> options)
             : base(options)
