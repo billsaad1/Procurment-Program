@@ -121,7 +121,7 @@ namespace ProcurementManager.UI.ViewModels
             return result;
         }
 
-        private new bool CanSave()
+        private bool CanSave()
         {
             return !HasErrors && SelectedPurchaseOrder != null && SelectedSupplier != null;
         }

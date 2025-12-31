@@ -49,7 +49,7 @@ namespace ProcurementManager.UI.ViewModels
             };
         }
 
-        private new bool CanSave()
+        private bool CanSave()
         {
             return !HasErrors;
         }
